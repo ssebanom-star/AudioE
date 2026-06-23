@@ -1,0 +1,7 @@
+pyworld
+librosa
+soundfile
+mido
+music21
+numpy
+scipy
