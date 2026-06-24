@@ -19,17 +19,66 @@ PSOLA 계열이나 단순 리샘플링 기반 피치 시프터는 피치를 옮�
 내리면 "거인" 소리가 나는 원인이다. WORLD의 분해/재합성 구조는 이 문제 자체를
 원천적으로 차단한다.
 
-## 설치
+## 설치 (로컬 프로그램)
+
+이 도구는 웹앱이 아니라 **내 컴퓨터에 직접 설치해서 쓰는 커맨드라인
+프로그램**이다. 설치하면 `vocal-aid` 라는 명령어가 생긴다.
+
+### 사전 준비
+
+- Python 3.10 이상
+- `pyworld`는 C 확장을 컴파일하므로 **C/C++ 컴파일러**가 필요하다.
+  - Windows: "Microsoft C++ Build Tools" 설치
+  - macOS: `xcode-select --install`
+  - Linux: `sudo apt install build-essential python3-dev` (또는 배포판에 맞게)
+
+### 가상환경 만들고 설치 (권장)
+
+소스 코드를 받은 폴더(이 README가 있는 폴더)에서:
 
 ```bash
-pip install -r requirements.txt
-# 테스트까지 실행하려면
-pip install -r requirements-dev.txt
+# 1) 프로젝트 폴더로 이동
+cd AudioE
+
+# 2) 가상환경 생성 + 활성화
+python -m venv .venv
+#   - macOS / Linux:
+source .venv/bin/activate
+#   - Windows (PowerShell):
+#   .venv\Scripts\Activate.ps1
+
+# 3) 프로그램 설치 (의존성까지 자동 설치됨)
+pip install .
+
+# 설치 확인
+vocal-aid --help
 ```
 
-(`pyworld`, `librosa`, `soundfile`, `mido`, `music21`, `numpy`, `scipy`)
+설치가 끝나면 어느 폴더에서나 `vocal-aid` 명령으로 실행할 수 있다
+(가상환경이 활성화된 상태에서). 코드를 고쳐가며 쓸 거면 `pip install .` 대신
+`pip install -e .` (editable 설치)를 쓰면 소스 수정이 바로 반영된다.
+
+테스트까지 돌리려면:
+
+```bash
+pip install -e ".[dev]"
+pytest
+```
+
+> 의존성: `pyworld`, `librosa`, `soundfile`, `mido`, `music21`, `numpy`, `scipy`
+> (모두 `pip install .` 시 자동 설치). `requirements.txt`로 의존성만 따로
+> 설치할 수도 있다.
 
 ## 사용법
+
+설치 후에는 `vocal-aid` 명령을 쓴다:
+
+```bash
+vocal-aid --source in.wav --melody song.mid --mode a --flatten 0.9 --out out.wav
+```
+
+설치하지 않고 소스 폴더에서 바로 실행하고 싶으면 모듈 형태로도 동일하게
+동작한다:
 
 ```bash
 python -m vocal_aid --source in.wav --melody song.mid --mode a --flatten 0.9 --out out.wav

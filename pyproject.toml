@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vocal-aid"
+version = "0.1.0"
+description = "UTAU-style note-mapping vocal pitch-correction engine (WORLD F0 replacement + frame time-stretch)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "pyworld",
+    "librosa",
+    "soundfile",
+    "mido",
+    "music21",
+    "numpy",
+    "scipy",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+vocal-aid = "vocal_aid.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["vocal_aid*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
